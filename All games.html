@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play free online and offline games including puzzles, card games, board games, and multiplayer games with friends">
+    <meta name="keywords" content="free games, online games, multiplayer games, puzzle games, card games, board games, offline games">
+    <meta name="author" content="GameHub">
+    <meta property="og:title" content="GameHub - Play Free Online & Offline Games">
+    <meta property="og:description" content="Hundreds of free games to play alone or with friends">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourgamehubdomain.com">
+    <title>GameHub - Play Free Online & Offline Games</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #ff6b6b;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --success-color: #2ecc71;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .games-section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--dark-color);
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .game-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .game-card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .game-card-body {
+            padding: 1.2rem;
+        }
+        
+        .game-card-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .game-card-desc {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .game-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .game-card-players {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .ad-container {
+            margin: 2rem 0;
+            background-color: #f0f0f0;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            min-height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .game-container {
+            display: none;
+            padding: 2rem 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 0 1.5rem;
+        }
+        
+        .back-to-games {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .game-area {
+            width: 100%;
+            padding: 1rem;
+            min-height: 400px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        /* Sample game UI - Tic Tac Toe */
+        #tic-tac-toe-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .tic-tac-toe-cell {
+            aspect-ratio: 1/1;
+            background-color: white;
+            border: 2px solid var(--dark-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .tic-tac-toe-cell:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .game-info {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .multiplayer-section {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+        }
+        
+        .online-players {
+            margin-top: 1rem;
+        }
+        
+        .player-badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .game-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .game-actions {
+                margin-top: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">Game<span>Hub</span></a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#games">Games</a></li>
+                    <li><a href="#multiplayer">Multiplayer</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Play Free Online & Offline Games</h1>
+            <p>Discover hundreds of exciting games to play alone or with friends from around the world. No downloads required!</p>
+            <a href="#games" class="btn btn-primary">Browse Games</a>
+            <a href="#multiplayer" class="btn btn-secondary">Play With Friends</a>
+        </div>
+    </section>
+
+    <!-- Ad Container (Top) -->
+    <div class="container">
+        <div class="ad-container">
+            <!-- Google AdSense Ad Unit -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"></script>
+            <!-- Replace with your ad unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <!-- Games Section -->
+    <section class="games-section" id="games">
+        <div class="container">
+            <h2 class="section-title">Popular Games</h2>
+            <div class="games-grid">
+                <!-- Game Card 1 - Tic Tac Toe -->
+                <div class="game-card" data-game="tic-tac-toe">
+                    <img src="https://via.placeholder.com/300x180?text=Tic+Tac+Toe" alt="Tic Tac Toe" class="game-card-img">
+                    <div class="game-card-body">
+                        <h3 class="game-card-title">Tic Tac Toe</h3>
+                        <p class="game-card-desc">Classic strategy game for two players. Play against the computer or a friend.</p>
+                        <div class="game-card-footer">
+                            <span class="game-card-players"><i class="fas fa-users"></i> 2 players</span>
+                            <button class="btn btn-primary play-btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Card 2 - Memory Match -->
+                <div class="game-card" data-game="memory-match">
+                    <img src="https://via.placeholder.com/300x180?text=Memory+Match" alt="Memory Match" class="game-card-img">
+                    <div class="game-card-body">
+                        <h3 class="game-card-title">Memory Match</h3>
+                        <p class="game-card-desc">Test your memory with this fun card matching game with multiple difficulty levels.</p>
+                        <div class="game-card-footer">
+                            <span class="game-card-players"><i class="fas fa-user"></i> 1 player</span>
+                            <button class="btn btn-primary play-btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Card 3 - Snake -->
+                <div class="game-card" data-game="snake">
+                    <img src="https://via.placeholder.com/300x180?text=Snake+Game" alt="Snake Game" class="game-card-img">
+                    <div class="game-card-body">
+                        <h3 class="game-card-title">Snake</h3>
+                        <p class="game-card-desc">The classic snake game. Eat the food and grow as long as possible without hitting yourself.</p>
+                        <div class="game-card-footer">
+                            <span class="game-card-players"><i class="fas fa-user"></i> 1 player</span>
+                            <button class="btn btn-primary play-btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Card 4 - Chess -->
+                <div class="game-card" data-game="chess">
+                    <img src="https://via.placeholder.com/300x180?text=Chess" alt="Chess" class="game-card-img">
+                    <div class="game-card-body">
+                        <h3 class="game-card-title">Chess</h3>
+                        <p class="game-card-desc">The timeless strategy game. Play against AI or challenge friends online.</p>
+                        <div class="game-card-footer">
+                            <span class="game-card-players"><i class="fas fa-users"></i> 2 players</span>
+                            <button class="btn btn-primary play-btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Card 5 - Sudoku -->
+                <div class="game-card" data-game="sudoku">
+                    <img src="https://via.placeholder.com/300x180?text=Sudoku" alt="Sudoku" class="game-card-img">
+                    <div class="game-card-body">
+                        <h3 class="game-card-title">Sudoku</h3>
+                        <p class="game-card-desc">Challenge your brain with this popular number puzzle game with multiple difficulty levels.</p>
+                        <div class="game-card-footer">
+                            <span class="game-card-players"><i class="fas fa-user"></i> 1 player</span>
+                            <button class="btn btn-primary play-btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game Card 6 - Connect Four -->
+                <div class="game-card" data-game="connect-four">
+                    <img src="https://via.placeholder.com/300x180?text=Connect+Four" alt="Connect Four" class="game-card-img">
+                    <div class="game-card-body">
+                        <h3 class="game-card-title">Connect Four</h3>
+                        <p class="game-card-desc">Be the first to connect four of your colored discs in a row. Play against AI or a friend.</p>
+                        <div class="game-card-footer">
+                            <span class="game-card-players"><i class="fas fa-users"></i> 2 players</span>
+                            <button class="btn btn-primary play-btn">Play Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ad Container (Middle) -->
+    <div class="container">
+        <div class="ad-container">
+            <!-- Google AdSense Ad Unit -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"></script>
+            <!-- Replace with your ad unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <!-- Multiplayer Section -->
+    <section class="games-section" id="multiplayer">
+        <div class="container">
+            <h2 class="section-title">Play With Friends</h2>
+            <p style="text-align: center; margin-bottom: 2rem;">Challenge your friends or play with random opponents from around the world!</p>
+            
+            <div class="games-grid">
+                <!-- Multiplayer Game 1 -->
+                <div class="game-card" data-game="multiplayer-chess">
+                    <img src="https://via.placeholder.com/300x180?text=Multiplayer+Chess" alt="Multiplayer Chess" class="game-card-img">
+                    <div class="game-card-body">
+                        <h3 class="game-card-title">Multiplayer Chess</h3>
+                        <p class="game-card-desc">Play chess in real-time with friends or random opponents with chat functionality.</p>
+                        <div class="game-card-footer">
+                            <span class="game-card-players"><i class="fas fa-globe"></i> 1,234 online</span>
+                            <button class="btn btn-secondary play-btn">Play Online</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Multiplayer Game 2 -->
+                <div class="game-card" data-game="multiplayer-tic-tac-toe">
+                    <img src="https://via.placeholder.com/300x180?text=Multiplayer+Tic+Tac+Toe" alt="Multiplayer Tic Tac Toe" class="game-card-img">
+                    <div class="game-card-body">
+                        <h3 class="game-card-title">Multiplayer Tic Tac Toe</h3>
+                        <p class="game-card-desc">Challenge friends or play against random opponents in this classic game.</p>
+                        <div class="game-card-footer">
+                            <span class="game-card-players"><i class="fas fa-globe"></i> 876 online</span>
+                            <button class="btn btn-secondary play-btn">Play Online</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Multiplayer Game 3 -->
+                <div class="game-card" data-game="word-battle">
+                    <img src="https://via.placeholder.com/300x180?text=Word+Battle" alt="Word Battle" class="game-card-img">
+                    <div class="game-card-body">
+                        <h3 class="game-card-title">Word Battle</h3>
+                        <p class="game-card-desc">Test your vocabulary against other players in real-time word challenges.</p>
+                        <div class="game-card-footer">
+                            <span class="game-card-players"><i class="fas fa-globe"></i> 2,543 online</span>
+                            <button class="btn btn-secondary play-btn">Play Online</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Container (Hidden by default) -->
+    <div class="container game-container" id="gameContainer">
+        <div class="game-header">
+            <a href="#" class="back-to-games" id="backToGames"><i class="fas fa-arrow-left"></i> Back to all games</a>
+            <div class="game-actions">
+                <button class="btn btn-secondary" id="multiplayerBtn"><i class="fas fa-users"></i> Play Online</button>
+                <button class="btn btn-primary" id="restartGame"><i class="fas fa-redo"></i> Restart</button>
+            </div>
+        </div>
+        
+        <div class="game-area" id="gameArea">
+            <!-- Game content will be loaded here dynamically -->
+            <div id="tic-tac-toe-game" style="display: none;">
+                <div id="tic-tac-toe-board">
+                    <div class="tic-tac-toe-cell" data-cell="0"></div>
+                    <div class="tic-tac-toe-cell" data-cell="1"></div>
+                    <div class="tic-tac-toe-cell" data-cell="2"></div>
+                    <div class="tic-tac-toe-cell" data-cell="3"></div>
+                    <div class="tic-tac-toe-cell" data-cell="4"></div>
+                    <div class="tic-tac-toe-cell" data-cell="5"></div>
+                    <div class="tic-tac-toe-cell" data-cell="6"></div>
+                    <div class="tic-tac-toe-cell" data-cell="7"></div>
+                    <div class="tic-tac-toe-cell" data-cell="8"></div>
+                </div>
+                <div class="game-info">
+                    <p id="gameStatus">Player X's turn</p>
+                </div>
+                
+                <div class="multiplayer-section" id="multiplayerSection" style="display: none;">
+                    <h3>Online Multiplayer</h3>
+                    <div>
+                        <button class="btn btn-primary" id="createRoomBtn">Create Private Room</button>
+                        <button class="btn btn-secondary" id="joinRandomBtn">Join Random Game</button>
+                    </div>
+                    <div class="online-players" id="onlinePlayers">
+                        <h4>Online Players (243):</h4>
+                        <!-- Players would be loaded dynamically -->
+                        <span class="player-badge">Player123</span>
+                        <span class="player-badge">GameMaster</span>
+                        <span class="player-badge">TicTacPro</span>
+                        <span class="player-badge">XandO</span>
+                        <span class="player-badge">Newbie</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- In-game Ad Container -->
+        <div class="ad-container" style="margin-top: 2rem;">
+            <!-- Google AdSense Ad Unit -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"></script>
+            <!-- In-game ad unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                 data-ad-slot="YOUR_IN_GAME_AD_SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="games-section" id="about">
+        <div class="container">
+            <h2 class="section-title">About GameHub</h2>
+            <div style="background-color: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                <p>GameHub is a free online gaming platform where you can play hundreds of games without any downloads. Our collection includes classic games, puzzles, strategy games, and multiplayer games that you can play with friends or random opponents from around the world.</p>
+                <p style="margin-top: 1rem;">All our games are fully responsive and work on desktop, tablet, and mobile devices. You can play offline when you don't have an internet connection, or go online to challenge other players.</p>
+                <p style="margin-top: 1rem;">GameHub is completely free to use. We support our platform through non-intrusive advertisements that help us keep the lights on and continue developing new games and features.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ad Container (Bottom) -->
+    <div class="container">
+        <div class="ad-container">
+            <!-- Google AdSense Ad Unit -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUBLISHER_ID"></script>
+            <!-- Replace with your ad unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+                 data-ad-slot="YOUR_AD_SLOT_ID"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="games-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <div style="background-color: white; padding: 2rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+                <form id="contactForm" style="max-width: 600px; margin: 0 auto;">
+                    <div style="margin-bottom: 1rem;">
+                        <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Your Name</label>
+                        <input type="text" id="name" name="name" required style="width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Email Address</label>
+                        <input type="email" id="email" name="email" required style="width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 5px;">
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label for="message" style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Message</label>
+                        <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 0.7rem; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>GameHub</h3>
+                    <p>Your ultimate destination for free online and offline games. Play alone or with friends anytime, anywhere.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#games">All Games</a></li>
+                        <li><a href="#multiplayer">Multiplayer Games</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Game Categories</h3>
+                    <ul>
+                        <li><a href="#">Puzzle Games</a></li>
+                        <li><a href="#">Card Games</a></li>
+                        <li><a href="#">Board Games</a></li>
+                        <li><a href="#">Strategy Games</a></li>
+                        <li><a href="#">Word Games</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">DMCA</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 GameHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const nav = document.getElementById('mainNav');
+            nav.style.display = nav.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Adjust mobile menu on resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                document.getElementById('mainNav').style.display = 'block';
+            }
+        });
+
+        // Game selection functionality
+        const playButtons = document.querySelectorAll('.play-btn');
+        const gameContainer = document.getElementById('gameContainer');
+        const gameArea = document.getElementById('gameArea');
+        const backToGames = document.getElementById('backToGames');
+        
+        playButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const gameCard = this.closest('.game-card');
+                const gameId = gameCard.getAttribute('data-game');
+                
+                // Hide all games
+                document.querySelectorAll('#gameArea > div').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Show selected game
+                const gameToShow = document.getElementById(gameId + '-game');
+                if (gameToShow) {
+                    gameToShow.style.display = 'block';
+                } else {
+                    // For demo purposes, we'll show tic-tac-toe for all games
+                    document.getElementById('tic-tac-toe-game').style.display = 'block';
+                }
+                
+                // Show game container
+                gameContainer.style.display = 'block';
+                
+                // Scroll to game
+                gameContainer.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        
+        // Back to games list
+        backToGames.addEventListener('click', function(e) {
+            e.preventDefault();
+            gameContainer.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Tic Tac Toe Game Logic
+        const cells = document.querySelectorAll('.tic-tac-toe-cell');
+        const gameStatus = document.getElementById('gameStatus');
+        let currentPlayer = 'X';
+        let gameState = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = true;
+        
+        const winningConditions = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+            [0, 4, 8], [2, 4, 6]             // diagonals
+        ];
+        
+        function handleCellClick(e) {
+            const clickedCell = e.target;
+            const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell'));
+            
+            if (gameState[clickedCellIndex] !== '' || !gameActive) {
+                return;
+            }
+            
+            gameState[clickedCellIndex] = currentPlayer;
+            clickedCell.textContent = currentPlayer;
+            
+            checkResult();
+        }
+        
+        function checkResult() {
+            let roundWon = false;
+            
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                
+                if (gameState[a] === '' || gameState[b] === '' || gameState[c] === '') {
+                    continue;
+                }
+                
+                if (gameState[a] === gameState[b] && gameState[b] === gameState[c]) {
+                    roundWon = true;
+                    break;
+                }
+            }
+            
+            if (roundWon) {
+                gameStatus.textContent = `Player ${currentPlayer} wins!`;
+                gameActive = false;
+                return;
+            }
+            
+            if (!gameState.includes('')) {
+                gameStatus.textContent = "Game ended in a draw!";
+                gameActive = false;
+                return;
+            }
+            
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            gameStatus.textContent = `Player ${currentPlayer}'s turn`;
+        }
+        
+        function restartGame() {
+            currentPlayer = 'X';
+            gameState = ['', '', '', '', '', '', '', '', ''];
+            gameActive = true;
+            gameStatus.textContent = `Player ${currentPlayer}'s turn`;
+            
+            cells.forEach(cell => {
+                cell.textContent = '';
+            });
+        }
+        
+        cells.forEach(cell => {
+            cell.addEventListener('click', handleCellClick);
+        });
+        
+        document.getElementById('restartGame').addEventListener('click', restartGame);
+        
+        // Multiplayer toggle
+        document.getElementById('multiplayerBtn').addEventListener('click', function() {
+            const multiplayerSection = document.getElementById('multiplayerSection');
+            multiplayerSection.style.display = multiplayerSection.style.display === 'none' ? 'block' : 'none';
+        });
+        
+        // Simulate form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset
