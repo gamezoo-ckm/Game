@@ -1,0 +1,33 @@
+// StudyHelperCombined.java
+package com.studyhelper;
+
+import javax.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.*;
+import org.springframework.ui.*;
+import org.springframework.web.bind.annotation.*;
+import java.time.*;
+import java.util.*;
+
+@Entity class Question { @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id; private String title, content, subject, chapter, educationLevel; private LocalDateTime postedAt; @OneToMany(mappedBy = "question", cascade = CascadeType.ALL) private List<Answer> answers = new ArrayList<>(); public Question() {} public Long getId() { return id; } public void setId(Long id) { this.id = id; } public String getTitle() { return title; } public void setTitle(String title) { this.title = title; } public String getContent() { return content; } public void setContent(String content) { this.content = content; } public String getSubject() { return subject; } public void setSubject(String subject) { this.subject = subject; } public String getChapter() { return chapter; } public void setChapter(String chapter) { this.chapter = chapter; } public String getEducationLevel() { return educationLevel; } public void setEducationLevel(String educationLevel) { this.educationLevel = educationLevel; } public LocalDateTime getPostedAt() { return postedAt; } public void setPostedAt(LocalDateTime postedAt) { this.postedAt = postedAt; } public List<Answer> getAnswers() { return answers; } public void setAnswers(List<Answer> answers) { this.answers = answers; } }
+
+@Entity class Answer { @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id; private String content; private LocalDateTime postedAt; private int upvotes; @ManyToOne @JoinColumn(name = "question_id") private Question question; public Answer() {} public Long getId() { return id; } public void setId(Long id) { this.id = id; } public String getContent() { return content; } public void setContent(String content) { this.content = content; } public LocalDateTime getPostedAt() { return postedAt; } public void setPostedAt(LocalDateTime postedAt) { this.postedAt = postedAt; } public int getUpvotes() { return upvotes; } public void setUpvotes(int upvotes) { this.upvotes = upvotes; } public Question getQuestion() { return question; } public void setQuestion(Question question) { this.question = question; } }
+
+@Entity class Note { @Id @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id; private String chapterName, subject, educationLevel, shortNotes, detailedNotes, mindMapUrl; public Note() {} public Long getId() { return id; } public void setId(Long id) { this.id = id; } public String getChapterName() { return chapterName; } public void setChapterName(String chapterName) { this.chapterName = chapterName; } public String getSubject() { return subject; } public void setSubject(String subject) { this.subject = subject; } public String getEducationLevel() { return educationLevel; } public void setEducationLevel(String educationLevel) { this.educationLevel = educationLevel; } public String getShortNotes() { return shortNotes; } public void setShortNotes(String shortNotes) { this.shortNotes = shortNotes; } public String getDetailedNotes() { return detailedNotes; } public void setDetailedNotes(String detailedNotes) { this.detailedNotes = detailedNotes; } public String getMindMapUrl() { return mindMapUrl; } public void setMindMapUrl(String mindMapUrl) { this.mindMapUrl = mindMapUrl; } }
+
+interface QuestionRepository extends JpaRepository<Question, Long> { List<Question> findByChapterAndEducationLevel(String chapter, String educationLevel); List<Question> findBySubject(String subject); }
+
+interface NoteRepository extends JpaRepository<Note, Long> { Optional<Note> findByChapterNameAndEducationLevel(String chapterName, String educationLevel); List<Note> findBySubject(String subject); }
+
+@Service class QuestionService { @Autowired private QuestionRepository questionRepository; public Question postQuestion(Question question) { question.setPostedAt(LocalDateTime.now()); return questionRepository.save(question); } public List<Question> getQuestionsByChapter(String chapter, String educationLevel) { return questionRepository.findByChapterAndEducationLevel(chapter, educationLevel); } }
+
+@Service class NoteService { @Autowired private NoteRepository noteRepository; public Note getNotesByChapter(String chapterName, String educationLevel) { return noteRepository.findByChapterNameAndEducationLevel(chapterName, educationLevel).orElseThrow(() -> new RuntimeException("Notes not found")); } public Note createNote(Note note) { return noteRepository.save(note); } }
+
+@Controller @RequestMapping("/questions") class QuestionController { @Autowired private QuestionService questionService; @GetMapping("/ask") public String showQuestionForm(Model model) { model.addAttribute("question", new Question()); return "ask-question"; } @PostMapping("/ask") public String submitQuestion(@ModelAttribute Question question) { questionService.postQuestion(question); return "redirect:/questions"; } @GetMapping public String showQuestions(Model model) { model.addAttribute("questions", questionService.getAllQuestions()); return "question-list"; } }
+
+@Controller @RequestMapping("/notes") class NoteController { @Autowired private NoteService noteService; @GetMapping("/search") public String showNoteSearchForm(Model model) { return "note-search"; } @PostMapping("/search") public String searchNotes(@RequestParam String chapterName, @RequestParam String educationLevel, Model model) { Note note = noteService.getNotesByChapter(chapterName, educationLevel); model.addAttribute("note", note); return "note-display"; } @GetMapping("/create") public String showNoteCreationForm(Model model) { model.addAttribute("note", new Note()); return "create-note"; } @PostMapping("/create") public String createNote(@ModelAttribute Note note) { noteService.createNote(note); return "redirect:/notes/search"; } }
+
+@SpringBootApplication public class StudyHelperApplication { public static void main(String[] args) { SpringApplication.run(StudyHelperApplication.class, args); } }
